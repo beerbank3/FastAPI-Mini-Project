@@ -7,22 +7,27 @@ class UserBase(BaseModel):
     is_active: Optional[bool] = True
     full_name: Optional[str] = None
 
+
 class UserCreate(UserBase):
     email: EmailStr
     password: str
-
-class UserUpdate(BaseModel):
-    password: Optional[str] = None
     
 
+class UserLogin(UserBase):
+    email: EmailStr
+    password: str
+
+    
 class UserInDBBase(UserBase):
     id: Optional[int] = None
 
     class Config:
-        orm_mode = True
+        from_attributes  = True
+
 
 class User(UserInDBBase):
     pass
+
 
 class UserInDB(UserInDBBase):
     hashed_password: str

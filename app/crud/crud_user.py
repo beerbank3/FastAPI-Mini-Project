@@ -1,9 +1,9 @@
 from typing import Any, Dict, Optional, Union
 
 from sqlalchemy.orm import Session
-from core.security import get_password_hash, verify_password
-from models.user import User
-from schemas.user import UserCreate
+from app.core.security import get_password_hash, verify_password
+from app.models.model import User
+from app.schemas.user import UserCreate
 
 class CRUDUser:
     

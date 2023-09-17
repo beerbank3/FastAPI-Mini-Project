@@ -7,22 +7,20 @@ from app.crud.crud_board import CRUDBoard
 from app.core.security import api_key_header, get_current_user
 router = APIRouter()
 
-def user_token_authenticate(token,bool):
+def user_token_authenticate(token):
     user = get_current_user(token)
-    if user is None and bool:
+    if user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    if user:
-        return int(user)
-    return None
+    return int(user)
 
 @router.post("/create/", response_model=BoardCreate)
 def create_board(board: BoardCreate, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
-    owner_id = user_token_authenticate(token,True)
+    owner_id = user_token_authenticate(token)
     return CRUDBoard.create_board(db, board=board, owner_id=owner_id)
 
 @router.post("/update/", response_model=BoardUpdate)
 def update_board(board: BoardUpdate, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
-    owner_id = user_token_authenticate(token,True)
+    owner_id = user_token_authenticate(token)
     db_board = CRUDBoard.get_board(db, board.id)
     if not db_board:
         raise HTTPException(status_code=404, detail="Board not found")
@@ -32,7 +30,7 @@ def update_board(board: BoardUpdate, db: Session = Depends(get_db), token: str =
 
 @router.post("/delete/", response_model=Board)
 def delete_board(board: Board, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
-    owner_id = user_token_authenticate(token,True)
+    owner_id = user_token_authenticate(token)
     db_board = CRUDBoard.get_board(db, board.id)
     if not db_board:
         raise HTTPException(status_code=404, detail="Board not found")
@@ -42,7 +40,7 @@ def delete_board(board: Board, db: Session = Depends(get_db), token: str = Depen
 
 @router.get("/{board_id}/", response_model=Board)
 def get_board(board_id: int, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
-    owner_id = user_token_authenticate(token,False)
+    owner_id = user_token_authenticate(token)
     db_board = CRUDBoard.get_board(db, board_id)
     if not db_board:
         raise HTTPException(status_code=404, detail="Board not found")
@@ -53,7 +51,8 @@ def get_board(board_id: int, db: Session = Depends(get_db), token: str = Depends
 
 
 @router.get("/")
-def read_board(db: Session = Depends(get_db), token: str = Depends(api_key_header)):
-    owner_id = user_token_authenticate(token,False)
-    
-    return CRUDBoard.list_boards(db, owner_id)
+def read_board(skip: int,db: Session = Depends(get_db), token: str = Depends(api_key_header)):
+    owner_id = user_token_authenticate(token)
+    if not skip:
+        skip = 0
+    return CRUDBoard.list_boards(db, owner_id,skip)

@@ -8,20 +8,18 @@ from app.core.security import api_key_header, get_current_user
 
 router = APIRouter()
 
-def user_token_authenticate(token,bool):
+def user_token_authenticate(token):
     user = get_current_user(token)
-    if user is None and bool:
+    if user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    if user:
-        return int(user)
-    return None
+    return int(user)
 
 # Create a new post
 @router.post("/create/", response_model=PostCreate)
 def create_post(post: PostCreate, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
     # You may want to add authentication here to ensure that the user creating the post is allowed to
     # create posts in the specified board.
-    owner_id = user_token_authenticate(token,True)
+    owner_id = user_token_authenticate(token)
 
     db_board = CRUDBoard.get_board(db, post.board_id)
     if not db_board:
@@ -34,7 +32,7 @@ def create_post(post: PostCreate, db: Session = Depends(get_db), token: str = De
 # Update a post
 @router.post("/update/", response_model=PostUpdate)
 def update_post(post: PostUpdate, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
-    owner_id = user_token_authenticate(token,True)
+    owner_id = user_token_authenticate(token)
     updated_post = CRUDPost.update_post(db, post=post ,owner_id=owner_id)
     if not updated_post:
         raise HTTPException(status_code=404, detail="Post not found")
@@ -43,7 +41,7 @@ def update_post(post: PostUpdate, db: Session = Depends(get_db), token: str = De
 # Delete a post
 @router.post("/delete/")
 def delete_post(post:PostDelete, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
-    owner_id = user_token_authenticate(token,True)
+    owner_id = user_token_authenticate(token)
     deleted_post = CRUDPost.delete_post(db, post.id, owner_id=owner_id)
     if not deleted_post:
         raise HTTPException(status_code=404, detail="Post not found")
@@ -52,7 +50,7 @@ def delete_post(post:PostDelete, db: Session = Depends(get_db), token: str = Dep
 # Get a post by ID
 @router.get("/get/{post_id}/", response_model=Post)
 def get_post(post_id: int, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
-    owner_id = user_token_authenticate(token,False)
+    owner_id = user_token_authenticate(token)
     db_board = CRUDBoard.get_board(db, post_id)
     if not db_board:
         raise HTTPException(status_code=404, detail="Board not found")
@@ -66,14 +64,15 @@ def get_post(post_id: int, db: Session = Depends(get_db), token: str = Depends(a
 
 # List posts in a board
 @router.get("/{board_id}/")
-def list_posts(board_id:int, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
-    owner_id = user_token_authenticate(token,True)
+def list_posts(board_id:int, skip: int, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
+    owner_id = user_token_authenticate(token)
     db_board = CRUDBoard.get_board(db, board_id)
     if not db_board:
         raise HTTPException(status_code=404, detail="Board not found")
     if db_board.owner_id != owner_id and not db_board.public:
         raise HTTPException(status_code=403, detail="Permission denied")
 
-    skip = 0
+    if not skip:
+        skip = 0
     posts = CRUDPost.post_list(db,board_id=board_id,skip=skip)
     return posts

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from app.schemas.board import BoardCreate, BoardUpdate
-from app.models.model import Board
-from sqlalchemy import and_, or_
+from app.models.model import Board, Post
+from sqlalchemy import and_, or_, func
 
 class CRUDBoard:
 
@@ -31,6 +31,11 @@ class CRUDBoard:
     def get_board(db: Session, board_id: int):
         return db.query(Board).filter(Board.id == board_id).first()
 
-    def list_boards(db: Session, owner_id: int, skip: int = 0, limit: int = 10):
+    def list_boards(db: Session, owner_id: int, skip: int, limit: int = 10):
+        subquery = (
+            db.query(Post.board_id, func.count(Post.id).label('post_count'))
+            .group_by(Post.board_id)
+            .subquery()
+        )
         filter_condition = or_(Board.public == True, Board.owner_id == owner_id)
-        return db.query(Board).filter(filter_condition).offset(skip).limit(limit).all()
+        return db.query(Board).outerjoin(subquery, Board.id == subquery.c.board_id).filter(filter_condition).order_by(func.coalesce(subquery.c.post_count, 0).desc()).offset(skip).limit(limit).all()

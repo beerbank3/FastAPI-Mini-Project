@@ -71,7 +71,6 @@
 # 폴더 구조
 ```
 Interview_Project
-├─ .gitignore
 ├─ app
 │  ├─ api
 │  │  ├─ api.py
@@ -85,7 +84,6 @@ Interview_Project
 │  ├─ core
 │  │  └─ security.py
 │  ├─ crud
-│  │  ├─ base.py
 │  │  ├─ crud_board.py
 │  │  ├─ crud_post.py
 │  │  └─ crud_user.py
@@ -93,9 +91,7 @@ Interview_Project
 │  │  └─ database.py
 │  ├─ main.py
 │  ├─ models
-│  │  ├─ board.py
-│  │  ├─ post.py
-│  │  └─ user.py
+│  │  └─ model.py
 │  └─ schemas
 │     ├─ board.py
 │     ├─ post.py
@@ -103,6 +99,7 @@ Interview_Project
 │     └─ user.py
 ├─ docker-compose.yml
 ├─ Dockerfile
+├─ README
 ├─ README.md
 └─ requirements.txt
 ```

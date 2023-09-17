@@ -41,33 +41,33 @@
 1. 계정 API  
     - SingUp  
     ![회원가입](README/Singup.gif)
-    - Login
+    - Login  
     ![로그인](README/Login.gif)
-    - Logout
+    - Logout  
     ![로그아웃](README/Logout.gif)
 2. 게시판 API
-    - Create
+    - Create  
     ![생성](README/BoardCreate.gif)
-    - Update
+    - Update  
     ![수정](README/BoardUpdate.gif)
-    - Delete
+    - Delete  
     ![삭제](README/BoardDelete.gif)
-    - Get
+    - Get  
     ![상세보기](README/BoardGet.gif)
-    - List
+    - List  
     ![리스트](README/BoardList.gif)
 3. 게시글 API
-    - Create
+    - Create  
     ![생성](README/PostCreate.gif)
-    - Update
+    - Update  
     ![수정](README/PostUpdate.gif)
-    - Delete
+    - Delete  
     ![삭제](README/PostDelete.gif)
-    - Get
+    - Get  
     ![상세보기](README/PostGet.gif)
-    - List
+    - List  
     ![리스트](README/PostList.gif)
-    
+
 # 폴더 구조
 ```
 Interview_Project

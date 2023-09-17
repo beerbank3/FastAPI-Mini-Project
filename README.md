@@ -1,7 +1,16 @@
 # Interview_Project
 **[엘리스] 미니 프로젝트**
 
+# API 명세서
+|기능|기능설명|완료|
+|------|---------------|---|
+|계정 API|||
+|SingUp|계정 정보(fullname, email, password) 를 입력 받아 계정을 생성합니다.|**완료**|
+|Login|email, password 를 입력 받아 계정에 로그인하고, 해당 로그인 세션의 access token 을 반환합니다.|**완료**|
+|Logout|현재 로그인 세션을 로그아웃 합니다.|**완료**|
 # 기능
+||내용|설명|
+|------|---|---|
 1. 계정 API
     - SingUp : 계정 정보(fullname, email, password) 를 입력 받아 계정을 생성합니다.**완료**
     - Login : email, password 를 입력 받아 계정에 로그인하고, 해당 로그인 세션의 access token 을 반환합니다.**완료**

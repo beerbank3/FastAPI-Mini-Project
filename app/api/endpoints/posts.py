@@ -33,6 +33,12 @@ def create_post(post: PostCreate, db: Session = Depends(get_db), token: str = De
 @router.post("/update/", response_model=PostUpdate)
 def update_post(post: PostUpdate, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
     owner_id = user_token_authenticate(token)
+    post_check = CRUDPost.get_post(db, post.id)
+    if not post_check:
+        raise HTTPException(status_code=404, detail="Post not found")
+    if post_check.owner_id != owner_id:
+        raise HTTPException(status_code=403, detail="Permission denied")
+    
     updated_post = CRUDPost.update_post(db, post=post ,owner_id=owner_id)
     if not updated_post:
         raise HTTPException(status_code=404, detail="Post not found")
@@ -42,6 +48,11 @@ def update_post(post: PostUpdate, db: Session = Depends(get_db), token: str = De
 @router.post("/delete/")
 def delete_post(post:PostDelete, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
     owner_id = user_token_authenticate(token)
+    post_check = CRUDPost.get_post(db, post.id)
+    if not post_check:
+        raise HTTPException(status_code=404, detail="Post not found")
+    if post_check.owner_id != owner_id:
+        raise HTTPException(status_code=403, detail="Permission denied")
     deleted_post = CRUDPost.delete_post(db, post.id, owner_id=owner_id)
     if not deleted_post:
         raise HTTPException(status_code=404, detail="Post not found")

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
-from app.db.database import Base
+from app.db.database import Base,engine
 
 class User(Base):
     __tablename__ = "users"
@@ -40,3 +40,5 @@ class Post(Base):
     # Post 클래스와 Board 클래스, User 클래스 사이의 관계 설정
     board = relationship("Board", back_populates="posts")
     owner = relationship("User", back_populates="posts")
+
+Base.metadata.create_all(bind=engine)

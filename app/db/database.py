@@ -2,7 +2,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import redis
-
 # PostgreSQL 데이터베이스 연결 정보
 DATABASE_URL = "postgresql://postgres:root@postgres:5432/developer"
 

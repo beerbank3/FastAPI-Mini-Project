@@ -51,15 +51,16 @@ def delete_post(post:PostDelete, db: Session = Depends(get_db), token: str = Dep
 @router.get("/get/{post_id}/", response_model=Post)
 def get_post(post_id: int, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
     owner_id = user_token_authenticate(token)
-    db_board = CRUDBoard.get_board(db, post_id)
+    post = CRUDPost.get_post(db, post_id)
+    if not post:
+        raise HTTPException(status_code=404, detail="Post not found")
+    
+    db_board = CRUDBoard.get_board(db, post.board_id)
     if not db_board:
         raise HTTPException(status_code=404, detail="Board not found")
     if db_board.owner_id != owner_id and not db_board.public:
         raise HTTPException(status_code=403, detail="Permission denied")
     
-    post = CRUDPost.get_post(db, post_id)
-    if not post:
-        raise HTTPException(status_code=404, detail="Post not found")
     return post
 
 # List posts in a board

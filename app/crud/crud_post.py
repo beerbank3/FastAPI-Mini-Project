@@ -36,4 +36,4 @@ class CRUDPost:
         return db.query(Post).filter(Post.id == post_id).first()
     
     def post_list(db: Session, board_id: int, skip: int, limit: int = 10):
-        return db.query(Post).filter(Post.board_id == board_id).offset(skip).limit(limit).all()
+        return db.query(Post).filter(Post.board_id == board_id).order_by(Post.id.desc()).offset(skip).limit(limit).all()

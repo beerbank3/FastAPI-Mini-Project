@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy.orm import Session
 from app.models.model import User
 from app.db.database import get_db
-from app.schemas.board import Board, BoardCreate, BoardUpdate
+from app.schemas.board import Board, BoardCreate, BoardUpdate, BoardDelete
 from app.crud.crud_board import CRUDBoard
 from app.core.security import api_key_header, get_current_user
 router = APIRouter()
@@ -29,14 +29,19 @@ def update_board(board: BoardUpdate, db: Session = Depends(get_db), token: str =
     return CRUDBoard.update_board(db, board.id, board)
 
 @router.post("/delete/", response_model=Board)
-def delete_board(board: Board, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
+def delete_board(board: BoardDelete, db: Session = Depends(get_db), token: str = Depends(api_key_header)):
     owner_id = user_token_authenticate(token)
     db_board = CRUDBoard.get_board(db, board.id)
     if not db_board:
         raise HTTPException(status_code=404, detail="Board not found")
     if db_board.owner_id != owner_id:
         raise HTTPException(status_code=403, detail="Permission denied")
-    return CRUDBoard.delete_board(db, board.id)
+    
+    delete_board = CRUDBoard.delete_board(db, board.id)
+    if not delete_board:
+        raise HTTPException(status_code=404, detail="Post not found")
+    return {"message": "Board deleted successfully"}
+
 
 @router.get("/{board_id}/", response_model=Board)
 def get_board(board_id: int, db: Session = Depends(get_db), token: str = Depends(api_key_header)):

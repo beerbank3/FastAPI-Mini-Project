@@ -12,6 +12,11 @@ class BoardUpdate(BoardBase):
     name: str
     public: bool
 
+
+class BoardDelete(BaseModel):
+    id: int
+
+    
 class Board(BoardBase):
     id: int
 

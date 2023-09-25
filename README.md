@@ -8,8 +8,8 @@
 
 |기능|기능설명|완료|
 |------|---------------|----|
-|[SingUp][1.1]|계정 정보(fullname, email, password) 를 입력 받아 계정을 생성합니다.|**완료**|
-|[Login][1.2]|email, password 를 입력 받아 계정에 로그인하고, 해당 로그인 세션의 access token 을 반환합니다.|**완료**|
+|SingUp|계정 정보(fullname, email, password) 를 입력 받아 계정을 생성합니다.|**완료**|
+|Login|email, password 를 입력 받아 계정에 로그인하고, 해당 로그인 세션의 access token 을 반환합니다.|**완료**|
 |Logout|현재 로그인 세션을 로그아웃 합니다.|**완료**|
 
 2. 게시판 API 
@@ -33,7 +33,7 @@
 |List|게시판 id 을 입력 받아 해당 게시판에 있는 게시글 목록을 조회합니다. 본인이 조회할 수 있는 게시판의 id 만 사용이 가능합니다|**완료**|
 
 # API 명세서
-- [1.1]: SingUp
+- SingUp
 
 ```
 POST /users/signup/
@@ -52,7 +52,7 @@ POST /users/signup/
 }
 ```
 
-- [1.2]: Login
+- Login
 # 기능 구현
 - docs, Postman으로 API 테스트
 1. 계정 API  

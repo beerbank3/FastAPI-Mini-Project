@@ -84,6 +84,138 @@
     }
     ```
 
+2. 게시판 API 
+
+    - Create
+    ```
+    POST /boards/create/
+    ```
+    ```
+    // header
+    {
+    "Content-type": "application/json"
+    }
+    // body
+    {
+    "name": "string",
+    "public": true
+    }
+    ```
+    - Update
+    ```
+    /boards/update/
+    ```
+    ```
+    // header
+    {
+    "Content-type": "application/json"
+    }
+    // body
+    {
+    "name": "string",
+    "public": true,
+    "id": 0
+    }
+    ```
+    - Delete
+    ```
+    POST /boards/delete/
+    ```
+    ```
+    // header
+    {
+    "Content-type": "application/json"
+    }
+    // body
+    {
+    "id": 0
+    }
+    ```
+    - Get
+    ```
+    GET /boards/{board_id}/
+    ```
+
+    ```
+    // Responses
+    {
+    "name": "string",
+    "public": true,
+    "id": 0
+    }
+    ```
+    - List
+
+    ```
+    GET /boards/skip={int}
+    ```
+
+3. 게시글 API
+
+    - Create
+    ```
+    POST /posts/create/
+    ```
+    ```
+    // header
+    {
+        "Content-type": "application/json"
+    }
+    // body
+    {
+    "title": "string",
+    "content": "string",
+    "board_id": 0
+    }
+    ```
+    - Update
+    ```
+    POST /posts/update/
+    ```
+    ```
+    // header
+    {
+        "Content-type": "application/json"
+    }
+    // body
+    {
+    "title": "string",
+    "content": "string",
+    "id": 0
+    }
+    ```
+    - Delete
+    ```
+    POST /posts/delete/
+    ```
+    ```
+    // header
+    {
+        "Content-type": "application/json"
+    }
+    // body
+    {
+    "id": 0
+    }
+    ```
+    - Get
+    ```
+    GET /posts/get/{post_id}
+    ```
+    ```
+    // Responses
+    {
+    "id": 0,
+    "title": "string",
+    "content": "string",
+    "board_id": 0
+    }
+
+    ```
+    - List
+    ```
+    GET /posts/{board_id}/skip={int}
+    ```
 
 # 기능 구현
 - docs, Postman으로 API 테스트

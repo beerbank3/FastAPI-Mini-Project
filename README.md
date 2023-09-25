@@ -1,10 +1,6 @@
-# Interview_Project
-**[엘리스] 미니 프로젝트**
+**FastAPI 게시판 미니 프로젝트**
 
 # 개요
-- 엘리스 백엔드(신입) 사전 미니 프로젝트
-- 제출기한 : 2023-09-19 오후 3시
-
 - 기간: 2023-09-15 ~ 2023-09-18
 
 # 기능
@@ -12,8 +8,8 @@
 
 |기능|기능설명|완료|
 |------|---------------|----|
-|SingUp|계정 정보(fullname, email, password) 를 입력 받아 계정을 생성합니다.|**완료**|
-|Login|email, password 를 입력 받아 계정에 로그인하고, 해당 로그인 세션의 access token 을 반환합니다.|**완료**|
+|[SingUp][1.1]|계정 정보(fullname, email, password) 를 입력 받아 계정을 생성합니다.|**완료**|
+|[Login][1.2]|email, password 를 입력 받아 계정에 로그인하고, 해당 로그인 세션의 access token 을 반환합니다.|**완료**|
 |Logout|현재 로그인 세션을 로그아웃 합니다.|**완료**|
 
 2. 게시판 API 
@@ -36,6 +32,27 @@
 |Get|게시글 id 를 입력 받아 게시글을 조회합니다. 본인이 생성하거나, 전체 공개된 게시판의 게시글을 조회할 수 있습니다.|**완료**|
 |List|게시판 id 을 입력 받아 해당 게시판에 있는 게시글 목록을 조회합니다. 본인이 조회할 수 있는 게시판의 id 만 사용이 가능합니다|**완료**|
 
+# API 명세서
+- [1.1]: SingUp
+
+```
+POST /users/signup/
+```
+
+```
+// header
+{
+  	"Content-type": "application/json"
+}
+// body
+{
+  "email": "user@example.com",
+  "full_name": "string",
+  "password": "string"
+}
+```
+
+- [1.2]: Login
 # 기능 구현
 - docs, Postman으로 API 테스트
 1. 계정 API  

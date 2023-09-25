@@ -33,24 +33,26 @@
 |List|게시판 id 을 입력 받아 해당 게시판에 있는 게시글 목록을 조회합니다. 본인이 조회할 수 있는 게시판의 id 만 사용이 가능합니다|**완료**|
 
 # API 명세서
-- SingUp
+1. 계정 API  
 
-```
-POST /users/signup/
-```
+    - SingUp
 
-```
-// header
-{
-  	"Content-type": "application/json"
-}
-// body
-{
-  "email": "user@example.com",
-  "full_name": "string",
-  "password": "string"
-}
-```
+    ```
+    POST /users/signup/
+    ```
+
+    ```
+    // header
+    {
+    "Content-type": "application/json"
+    }
+    // body
+    {
+    "email": "user@example.com",
+    "full_name": "string",
+    "password": "string"
+    }
+    ```
 
 - Login
 # 기능 구현

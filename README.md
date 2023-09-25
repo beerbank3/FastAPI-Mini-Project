@@ -54,7 +54,37 @@
     }
     ```
 
-- Login
+    - Login
+
+    ```
+    POST /login/
+    ```
+
+    ```
+    // header
+    {
+    "Content-type": "application/json"
+    }
+    // body
+    {
+    "email": "user@example.com",
+    "password": "string"
+    }
+    ```
+
+    - Logout
+    ```
+    POST /logout/
+    ```
+
+    ```
+    // header
+    {
+    "Content-type": "application/json"
+    }
+    ```
+
+
 # 기능 구현
 - docs, Postman으로 API 테스트
 1. 계정 API  
